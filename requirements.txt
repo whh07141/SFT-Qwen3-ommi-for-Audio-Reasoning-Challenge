@@ -1,0 +1,13 @@
+# Example dependencies - adjust versions for your environment (CPU/GPU/CUDA)
+torch>=2.1.0
+transformers
+accelerate
+bitsandbytes
+numpy
+scipy
+librosa
+soundfile
+datasets
+
+# Optional (for PEFT/LoRA)
+peft

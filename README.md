@@ -6,19 +6,30 @@
 
 ## 快速开始
 
-- **先决条件**：Python 3.8+，Git，若使用 GPU 请安装对应的 CUDA 驱动。
-- **安装示例**：
+- **先决条件**：Python 3.8+（推荐 3.10+），Git，若使用 GPU 请安装对应的 CUDA 驱动和 cuDNN。
+
+- **建议环境（示例）**：
 
   ```bash
+  python -m venv .venv
+  source .venv/bin/activate
+  pip install --upgrade pip
   pip install -r requirements.txt
   ```
+
+- **安装说明**：请根据你使用的硬件（CPU/GPU）调整 `requirements.txt` 中的 `torch` 版本，例如使用 CUDA 版本对应的 `torch` wheel 或官方安装命令。
 
 - **运行示例**：
 
   ```bash
-  # 替换为实际的运行命令
-  python run.py --help
+  # 查看训练脚本帮助
+  python scripts/train.py --help
+
+  # 运行一次快速示例（替换为实际脚本与参数）
+  python scripts/train.py --config configs/finetune_cot.yaml --data_dir /path/to/data --output_dir ./checkpoints/debug
   ```
+
+请在 `requirements.txt` 中根据目标硬件填入合适的依赖（仓库内已添加示例依赖）。
 
 ## 目录结构（示例）
 
