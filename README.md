@@ -1,28 +1,53 @@
 # SFT-Qwen3-ommi-for-Audio-Reasoning-Challenge
 
 
-本项目是Interspeech 2026 音频推理挑战（Audio Reasoning Challenge）的解决方法。我们利用
+本项目是用于Interspeech 2026音频推理挑战（[Audio Reasoning Challenge](https://audio-reasoning-challenge.github.io/)）的微调与评估仓库模版。我们基于[LlamaFactory 仓库](https://github.com/hiyouga/LlamaFactory/tree/main)，使用Audio-Reasoner-CoTA数据集构建了包含完整思维链的多任务SFT数据，微调了Qwen3-Omni-30B-A3B-Thinking.此项目包含了完整的思维链数据构建，LlamaFactory微调Qwen3-Omni-30B-A3B-Thinking的环境配置，训练过程及在MMAR Benchmark上的评测结果，旨在提供给初学者一个入门的大模型微调套餐。
 
 ## 快速开始
 
-- **先决条件**：Python 3.8+（推荐 3.10+），Git，若使用 GPU 请安装对应的 CUDA 驱动和 cuDNN。
+- **先决条件**：Python 3.11，cuda 11.8
 
 - **建议环境（示例）**：
-
+1.镜像拉取,根据Ubuntu版本拉取cuda版本为11.8的镜像，建议拉取devel版本。
+docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/nvidia/cuda:11.8.0-devel-ubuntu22.04
+2.运行镜像，安装conda，新建python版本为3.11的新环境。
+3.配置LlamaFactory运行环境
   ```bash
-  python -m venv .venv
-  source .venv/bin/activate
-  pip install --upgrade pip
-  pip install -r requirements.txt
+git clone --depth 1 https://github.com/hiyouga/LlamaFactory.git
+cd LlamaFactory
+pip install -e .
+pip install -r requirements/metrics.txt
   ```
 
-- **安装说明**：请根据你使用的硬件（CPU/GPU）调整 `requirements.txt` 中的 `torch` 版本，例如使用 CUDA 版本对应的 `torch` wheel 或官方安装命令。
+- **安装说明**：可选的额外依赖项：metrics、deepspeed。使用 pip install -e . && pip install -r requirements/metrics.txt -r requirements/deepspeed.txt 安装。
 
-- **运行示例**：
-
+- **数据处理**：
+1.下载Audio-Reasoner-CoTA数据集
+huggingface-cli download --repo-type dataset zhifeixie/Audio-Reasoner-CoTA --local-dir ./
+2.数据提取，原始数据被保存为parquet，使用dataset加载音频和标签并保存。
   ```bash
-  # 查看训练脚本帮助
-  python scripts/train.py --help
+  python demo.py
+  ```
+3.数据处理，将数据集标签处理为LlamaFactory需要的格式。
+  ```bash
+  python qwen3_audio_think_sft.py
+  ```
+4.自定义数据集更新，在LlamaFactory 中更新 data/dataset_info.json。
+具体格式如：
+"qwen3-audio-thinking":{
+    "file_name":"/data/wanghh/challenge/meld/qwen3_audio_think_sft.jsonl",
+    "columns": {
+    "prompt": "instruction",
+    "query": "input",
+    "response": "output",
+    "system": "system",
+    "history": "history"
+    }
+  }
+
+4.SFT training，在3块显存为24GB的3090上微调Qwen3-Omni-30B-A3B-Thinking，启用4bit量化，lora微调。
+  ```bash
+  llamafactory-cli train examples/train_qlora/qwen3_lora_sft_otfq.yaml
 
   # 运行一次快速示例（替换为实际脚本与参数）
   python scripts/train.py --config configs/finetune_cot.yaml --data_dir /path/to/data --output_dir ./checkpoints/debug
@@ -79,7 +104,7 @@
 
 ## 2. 数据与预处理 / Data & Preprocessing
 **中文**：
-- 数据集：Audio-Reasoner（请在 `DATA_DIR` 中放置并保持原始结构）。
+- 数据集：[Audio-Reasoner-CoTA](https://huggingface.co/datasets/zhifeixie/Audio-Reasoner-CoTA)（请在 `DATA_DIR` 中放置并保持原始结构）。
 - 格式：每条样例包含音频标识、转录/特征（如有）、问题、COT 推理过程（训练时的目标）、以及最终答案。
 - 预处理要点：
   - 音频处理：如果模型输入包含音频特征（如 log-mel, wav2vec 特征），请在预处理阶段生成 `.npy` / `.pt` 特征并保存索引表。
@@ -87,7 +112,7 @@
   - 数据切分：训练/验证/测试（例如 80/10/10）。
 
 **English**:
-- Dataset: Audio-Reasoner (place raw data under `DATA_DIR`).
+- Dataset: [Audio-Reasoner-CoTA](https://huggingface.co/datasets/zhifeixie/Audio-Reasoner-CoTA) (place raw data under `DATA_DIR`).
 - Format: each item includes audio id, transcript/features (if any), question, CoT reasoning (target during SFT), and final answer.
 - Preprocessing highlights:
   - Audio features: preprocess audio to fixed features if needed (e.g., log-mel, wav2vec). Save indexing table.
