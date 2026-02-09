@@ -1,8 +1,7 @@
 # SFT-Qwen3-ommi-for-Audio-Reasoning-Challenge
 
-项目说明：
 
-这是用于音频推理挑战（Audio Reasoning Challenge）的微调与评估仓库模版。README 内容为占位模板，您可以根据需要自行修改或补充细节。
+本项目是Interspeech 2026 音频推理挑战（Audio Reasoning Challenge）的解决方法。我们利用
 
 ## 快速开始
 
