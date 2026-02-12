@@ -1,84 +1,10 @@
 # SFT-Qwen3-ommi-for-Audio-Reasoning-Challenge
 
 
-本项目是用于Interspeech 2026音频推理挑战（[Audio Reasoning Challenge](https://audio-reasoning-challenge.github.io/)）的微调与评估仓库模版。我们基于[LlamaFactory 仓库](https://github.com/hiyouga/LlamaFactory/tree/main)，使用Audio-Reasoner-CoTA数据集构建了包含完整思维链的多任务SFT数据，微调了Qwen3-Omni-30B-A3B-Thinking.此项目包含了完整的思维链数据构建，LlamaFactory微调Qwen3-Omni-30B-A3B-Thinking的环境配置，训练过程及在MMAR Benchmark上的评测结果，旨在提供给初学者一个入门的大模型微调套餐。
-
-## 快速开始
-
-- **先决条件**：Python 3.11，cuda 11.8
-
-- **建议环境（示例）**：
-1.镜像拉取,根据Ubuntu版本拉取cuda版本为11.8的镜像，建议拉取devel版本。
-docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/nvidia/cuda:11.8.0-devel-ubuntu22.04
-2.运行镜像，安装conda，新建python版本为3.11的新环境。
-3.配置LlamaFactory运行环境
-  ```bash
-git clone --depth 1 https://github.com/hiyouga/LlamaFactory.git
-cd LlamaFactory
-pip install -e .
-pip install -r requirements/metrics.txt
-  ```
-
-- **安装说明**：可选的额外依赖项：metrics、deepspeed。使用 pip install -e . && pip install -r requirements/metrics.txt -r requirements/deepspeed.txt 安装。
-
-- **数据处理**：
-1.下载Audio-Reasoner-CoTA数据集
-huggingface-cli download --repo-type dataset zhifeixie/Audio-Reasoner-CoTA --local-dir ./
-2.数据提取，原始数据被保存为parquet，使用dataset加载音频和标签并保存。
-  ```bash
-  python demo.py
-  ```
-3.数据处理，将数据集标签处理为LlamaFactory需要的格式。
-  ```bash
-  python qwen3_audio_think_sft.py
-  ```
-4.自定义数据集更新，在LlamaFactory 中更新 data/dataset_info.json。
-具体格式如：
-"qwen3-audio-thinking":{
-    "file_name":"/data/wanghh/challenge/meld/qwen3_audio_think_sft.jsonl",
-    "columns": {
-    "prompt": "instruction",
-    "query": "input",
-    "response": "output",
-    "system": "system",
-    "history": "history"
-    }
-  }
-
-4.SFT training，在3块显存为24GB的3090上微调Qwen3-Omni-30B-A3B-Thinking，启用4bit量化，lora微调。
-  ```bash
-  llamafactory-cli train examples/train_qlora/qwen3_lora_sft_otfq.yaml
-
-  # 运行一次快速示例（替换为实际脚本与参数）
-  python scripts/train.py --config configs/finetune_cot.yaml --data_dir /path/to/data --output_dir ./checkpoints/debug
-  ```
-
-请在 `requirements.txt` 中根据目标硬件填入合适的依赖（仓库内已添加示例依赖）。
-
-## 目录结构（示例）
-
-- `data/`：数据集与预处理脚本
-- `src/`：主要代码（模型、训练、评估）
-- `configs/`：配置文件
-- `scripts/`：辅助脚本（训练、推理、评估）
-
-## 贡献
-
-欢迎贡献。请在提交前创建 issue 讨论主要改动，并遵循项目代码风格与测试规范。
-
-## 许可证
-
-请根据实际需要添加许可证信息。
-
-## 联系方式
-
-如需帮助或协作，请打开 issue 或联系仓库维护者。
 # Audio-Reasoner 微调 Qwen3-ommi-thinking-30B（基于 Llamaractory） / Fine-tuning Qwen3-ommi-thinking-30B on Audio-Reasoner (Llamaractory)
 
-**简短说明 (Overview)** ✅
-- 本仓库记录了使用 **Llamaractory** 框架，基于 **Audio-Reasoner** 数据集对 **Qwen3-ommi-thinking-30B** 进行 COT（Chain-of-Thought）风格微调的完整流程。该 README 为中英双语版，包含训练、推理、评估、模型卡与复现步骤。
-
-- This repo documents the end-to-end process for fine-tuning **Qwen3-ommi-thinking-30B** with **Chain-of-Thought (CoT)** supervision on the **Audio-Reasoner** dataset using **Llamaractory**. This README is bilingual (ZH/EN).
+**项目概述 / Overview**：
+本项目是用于Interspeech 2026音频推理挑战（[Audio Reasoning Challenge](https://audio-reasoning-challenge.github.io/)）的微调与评估仓库。我们基于[LlamaFactory 仓库](https://github.com/hiyouga/LlamaFactory/tree/main)，使用Audio-Reasoner-CoTA数据集构建了包含完整思维链的多任务SFT数据，微调了Qwen3-Omni-30B-A3B-Thinking。项目包含完整的思维链数据构建、训练过程、推理、评估及复现步骤，旨在为初学者提供一套完整的大模型微调方案。 / This repo documents the end-to-end process for fine-tuning **Qwen3-ommi-thinking-30B** with **Chain-of-Thought (CoT)** supervision on the **Audio-Reasoner** dataset using **Llamaractory**, including data processing, training, inference, evaluation, and reproducibility.
 
 ---
 
@@ -96,11 +22,8 @@ huggingface-cli download --repo-type dataset zhifeixie/Audio-Reasoner-CoTA --loc
 ---
 
 ## 1. 项目简介 / Project Summary
-**中文**：本项目目标是让 Qwen3-ommi-thinking-30B 在 Audio-Reasoner 任务上通过 Chain-of-Thought 风格的数据进行微调，从而提高复杂音频推理问题的逐步推理能力与最终答案准确率。
 
-**English**: Goal is to improve step-by-step reasoning and final answer accuracy of Qwen3-ommi-thinking-30B on Audio-Reasoner by fine-tuning with Chain-of-Thought style supervision.
 
----
 
 ## 2. 数据与预处理 / Data & Preprocessing
 **中文**：
