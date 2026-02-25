@@ -24,10 +24,10 @@ This repo documents the end-to-end process for fine-tuning **Qwen3-ommi-thinking
 
 ## 2. Data & Preprocessing
 - Dataset: [Audio-Reasoner-CoTA](https://huggingface.co/datasets/zhifeixie/Audio-Reasoner-CoTA).
-- Format: 数据集使用Apache Parquet 列式存储格式保存。
-- Preprocessing :
-  - python demo.py,保存音频数据和包含完整思维链的标签。
-  - python qwen3_audio_think_sft.py,生成可供Llamafactory 处理的标签
+- Format: the dataset is stored in Apache Parquet columnar format.
+- Preprocessing:
+  - Run `python demo.py` to save audio data along with labels containing full chains of thought.
+  - Run `python qwen3_audio_think_sft.py` to generate labels in a format consumable by Llamafactory.
 
 Example training sample (JSON-like):
 ```
@@ -46,7 +46,7 @@ Example training sample (JSON-like):
 - llama/llamaractory
 - vllm
 - flash-attn
-***建议使用docker，我使用11.8.0-cudnn8-runtime-ubuntu22.04运行的容器完美运行，建议按照unbntu支持的cuda进行docker选择，后续我将上传此镜像。
+*It is recommended to use Docker. I ran the container successfully with `11.8.0-cudnn8-runtime-ubuntu22.04`; choose a CUDA version supported by your Ubuntu release. I will upload this image later.*
 
 Example training configuration (YAML template):
 ```yaml
@@ -100,15 +100,18 @@ llamafactory-cli train examples/train_qlora/qwen3_lora_sft_otfq.yaml
 ```
 
 Training notes:
-- 训练卡为4张24GB显存的3090，因此只能开启4 bit量化训练, gradient accumulation, appropriate batch size/learning rate..
-- Fix seed for reproducibility (e.g., seed=42)
+- The training setup uses four 24 GB RTX 3090 cards, which restricts us to 4‑bit quantized training; remember to enable gradient accumulation and choose appropriate batch size/learning rate.
+- Fix the random seed for reproducibility (e.g., seed=42).
 
 ---
 
 ## 4. Inference command ▶️
-首先merge模型:
+First, merge the models with:
+```
 llamafactory-cli export examples/merge_lora/qwen3_lora_sft.yaml
-基于MMAR Benchmark的capabilities of SFT Qwen3-Ommi-Thinking-30B by focusing on Chain-of-Thought (CoT) reasoning in complex acoustic scenarios:
+```
+Then run the baseline inference script to evaluate the capabilities of the SFT Qwen3-Ommi-Thinking-30B on the MMAR benchmark, focusing on Chain-of-Thought (CoT) reasoning in complex acoustic scenarios:
+```
 python infer_single_model_baseline.py \
    --qwen3_omni_model_name_or_path PATH/TO/Qwen3-Omni-30B-A3B-Thinking \
    --dataset_meta_path PATH/TO/MMAR-meta.json \
@@ -117,14 +120,15 @@ python infer_single_model_baseline.py \
    --output_dir outputs/single_model_baseline \
    --max_new_tokens 1024
 ```
-Training notes: 推理使用的模型为上述SFT的模型。
+```
+Training notes: the inference run uses the SFT model described above.
 ```
 
 
 ---
 
 ## 5. Result ✅
-我们评估了未微调版本和基于4bit量化SFT的模型在MMAR上的结果:
+The following are the results on MMAR for the un-finetuned baseline and the 4‑bit quantized SFT model:
 
 | Models                              | Avg    | Sound  | Music  | Speech | Sound-Music | Sound-Speech | Music-Speech | Sound-Music-Speech |
 |-------------------------------------|--------|--------|--------|--------|-------------|--------------|--------------|--------------------|
@@ -134,6 +138,6 @@ Training notes: 推理使用的模型为上述SFT的模型。
 
 
 ## 7. Acknowledge 🔁
-我所有的工作都基于Llamafactory和https://github.com/Audio-Reasoning-Challenge/Audio-Reasoning-Challenge-Baselines，如果您觉得有用请多多star。
+All of my work is based on Llamafactory and the [Audio-Reasoning-Challenge-Baselines](https://github.com/Audio-Reasoning-Challenge/Audio-Reasoning-Challenge-Baselines) repository. If you find this project useful, please consider giving those projects a star.
 
 ---
