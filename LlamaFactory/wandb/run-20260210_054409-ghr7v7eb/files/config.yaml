@@ -1,0 +1,1206 @@
+_name_or_path:
+    value: ""
+_pre_quantization_dtype:
+    value: torch.bfloat16
+_wandb:
+    value:
+        cli_version: 0.24.2
+        e:
+            43apchivxrfz5ynsgzalytetvux9ga8v:
+                args:
+                    - examples/train_qlora/qwen3_lora_sft_otfq.yaml
+                codePath: src/llamafactory/launcher.py
+                codePathLocal: src/llamafactory/launcher.py
+                cpu_count: 40
+                cpu_count_logical: 80
+                cudaVersion: "12.4"
+                disk:
+                    /:
+                        total: "55945948299264"
+                        used: "54974987988992"
+                email: 1307366566@qq.com
+                executable: /opt/conda/envs/qwen3-ommi-sft/bin/python3.11
+                git:
+                    commit: e70651ac58af6c3446741e8f6b6d4d0d913248c5
+                    remote: https://githubfast.com/hiyouga/LlamaFactory.git
+                gpu: NVIDIA GeForce RTX 3090
+                gpu_count: 3
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 10496
+                      memoryTotal: "25769803776"
+                      name: NVIDIA GeForce RTX 3090
+                      uuid: GPU-0a5fdfe1-5039-c83c-f6b2-82ea53613f77
+                    - architecture: Ampere
+                      cudaCores: 10496
+                      memoryTotal: "25769803776"
+                      name: NVIDIA GeForce RTX 3090
+                      uuid: GPU-fb7ca5b8-3920-9ecf-6766-5dbf27eefd96
+                    - architecture: Ampere
+                      cudaCores: 10496
+                      memoryTotal: "25769803776"
+                      name: NVIDIA GeForce RTX 3090
+                      uuid: GPU-aa1f41a0-4f05-4d23-de59-47f1b83c9420
+                host: 6e7788c8a93b
+                memory:
+                    total: "269907050496"
+                os: Linux-3.10.0-1160.76.1.el7.x86_64-x86_64-with-glibc2.35
+                program: /home/wanghh/LlamaFactory/src/llamafactory/launcher.py
+                python: CPython 3.11.11
+                root: /home/wanghh/LlamaFactory
+                startedAt: "2026-02-10T05:44:09.956846Z"
+                writerId: 43apchivxrfz5ynsgzalytetvux9ga8v
+        m:
+            - "1": train/global_step
+              "6":
+                - 3
+              "7": []
+            - "2": '*'
+              "5": 1
+              "6":
+                - 1
+              "7": []
+        python_version: 3.11.11
+        t:
+            "1":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 51
+                - 71
+                - 84
+                - 98
+                - 105
+            "2":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 51
+                - 71
+                - 84
+                - 98
+                - 105
+            "3":
+                - 7
+                - 19
+                - 66
+            "4": 3.11.11
+            "5": 0.24.2
+            "6": 4.57.1
+            "9":
+                "1": transformers_trainer
+            "12": 0.24.2
+            "13": linux-x86_64
+accelerator_config:
+    value:
+        dispatch_batches: null
+        even_batches: true
+        gradient_accumulation_kwargs: null
+        non_blocking: false
+        split_batches: false
+        use_seedable_sampler: true
+adafactor:
+    value: false
+adam_beta1:
+    value: 0.9
+adam_beta2:
+    value: 0.999
+adam_epsilon:
+    value: 1e-08
+add_cross_attention:
+    value: false
+architectures:
+    value: null
+audio_config:
+    value:
+        _name_or_path: ""
+        _pre_quantization_dtype: torch.bfloat16
+        activation_dropout: 0
+        activation_function: gelu
+        add_cross_attention: false
+        architectures: null
+        attention_dropout: 0
+        bad_words_ids: null
+        begin_suppress_tokens: null
+        bos_token_id: null
+        chunk_size_feed_forward: 0
+        conv_chunksize: 500
+        cross_attention_hidden_size: null
+        d_model: 1280
+        decoder_start_token_id: null
+        diversity_penalty: 0
+        do_sample: false
+        downsample_hidden_size: 480
+        dropout: 0
+        dtype: null
+        early_stopping: false
+        encoder_attention_heads: 20
+        encoder_ffn_dim: 5120
+        encoder_layers: 32
+        encoder_no_repeat_ngram_size: 0
+        eos_token_id: null
+        exponential_decay_length_penalty: null
+        finetuning_task: null
+        forced_bos_token_id: null
+        forced_eos_token_id: null
+        id2label:
+            "0": LABEL_0
+            "1": LABEL_1
+        initializer_range: 0.02
+        is_decoder: false
+        is_encoder_decoder: false
+        label2id:
+            LABEL_0: 0
+            LABEL_1: 1
+        length_penalty: 1
+        max_length: 20
+        max_source_positions: 1500
+        min_length: 0
+        model_type: qwen3_omni_moe_audio_encoder
+        n_window: 50
+        n_window_infer: 800
+        no_repeat_ngram_size: 0
+        num_beam_groups: 1
+        num_beams: 1
+        num_hidden_layers: 32
+        num_mel_bins: 128
+        num_return_sequences: 1
+        output_attentions: false
+        output_dim: 2048
+        output_hidden_states: false
+        output_scores: false
+        pad_token_id: null
+        prefix: null
+        problem_type: null
+        remove_invalid_values: false
+        repetition_penalty: 1
+        return_dict: true
+        return_dict_in_generate: false
+        scale_embedding: false
+        sep_token_id: null
+        suppress_tokens: null
+        task_specific_params: null
+        temperature: 1
+        tf_legacy_loss: false
+        tie_encoder_decoder: false
+        tie_word_embeddings: true
+        tokenizer_class: null
+        top_k: 50
+        top_p: 1
+        torchscript: false
+        typical_p: 1
+        use_bfloat16: false
+audio_end_token_id:
+    value: 151670
+audio_start_token_id:
+    value: 151669
+audio_token_id:
+    value: 151675
+auto_find_batch_size:
+    value: false
+average_tokens_across_devices:
+    value: true
+bad_words_ids:
+    value: null
+batch_eval_metrics:
+    value: false
+begin_suppress_tokens:
+    value: null
+bf16:
+    value: true
+bf16_full_eval:
+    value: false
+bos_token_id:
+    value: null
+chunk_size_feed_forward:
+    value: 0
+cross_attention_hidden_size:
+    value: null
+data_args:
+    value:
+        buffer_size: 16384
+        cutoff_len: 2048
+        data_shared_file_system: false
+        dataset:
+            - qwen3-audio-thinking
+        dataset_dir: data
+        default_system: null
+        enable_thinking: true
+        eval_dataset: null
+        eval_num_beams: null
+        eval_on_each_dataset: false
+        ignore_pad_token_for_loss: true
+        interleave_probs: null
+        mask_history: false
+        max_samples: 379288
+        media_dir: data
+        mix_strategy: concat
+        neat_packing: false
+        overwrite_cache: false
+        packing: false
+        preprocessing_batch_size: 1000
+        preprocessing_num_workers: 16
+        streaming: false
+        template: qwen3
+        tokenized_path: null
+        tool_format: null
+        train_on_prompt: false
+        val_size: 0
+data_seed:
+    value: null
+dataloader_drop_last:
+    value: false
+dataloader_num_workers:
+    value: 2
+dataloader_persistent_workers:
+    value: false
+dataloader_pin_memory:
+    value: true
+dataloader_prefetch_factor:
+    value: null
+ddp_backend:
+    value: null
+ddp_broadcast_buffers:
+    value: null
+ddp_bucket_cap_mb:
+    value: null
+ddp_find_unused_parameters:
+    value: false
+ddp_timeout:
+    value: 180000000
+debug:
+    value: []
+decoder_start_token_id:
+    value: null
+deepspeed:
+    value: null
+disable_tqdm:
+    value: false
+diversity_penalty:
+    value: 0
+do_eval:
+    value: false
+do_predict:
+    value: false
+do_sample:
+    value: false
+do_train:
+    value: true
+dtype:
+    value: bfloat16
+early_stopping:
+    value: false
+encoder_no_repeat_ngram_size:
+    value: 0
+eos_token_id:
+    value: 151645
+eval_accumulation_steps:
+    value: null
+eval_delay:
+    value: 0
+eval_do_concat_batches:
+    value: true
+eval_on_start:
+    value: false
+eval_steps:
+    value: null
+eval_strategy:
+    value: "no"
+eval_use_gather_object:
+    value: false
+exponential_decay_length_penalty:
+    value: null
+finetuning_args:
+    value:
+        additional_target: null
+        apollo_layerwise: false
+        apollo_proj: random
+        apollo_proj_type: std
+        apollo_rank: 16
+        apollo_scale: 32
+        apollo_scale_front: false
+        apollo_scale_type: channel
+        apollo_target:
+            - all
+        apollo_update_interval: 200
+        badam_mask_mode: adjacent
+        badam_mode: layer
+        badam_start_block: null
+        badam_switch_interval: 50
+        badam_switch_mode: ascending
+        badam_update_ratio: 0.05
+        badam_verbose: 0
+        compute_accuracy: false
+        create_new_adapter: false
+        disable_shuffling: false
+        dpo_label_smoothing: 0
+        eaft_alpha: 1
+        early_stopping_steps: null
+        finetuning_type: lora
+        freeze_extra_modules: null
+        freeze_language_model: false
+        freeze_multi_modal_projector: true
+        freeze_trainable_layers: 2
+        freeze_trainable_modules:
+            - all
+        freeze_vision_tower: true
+        galore_layerwise: false
+        galore_proj_type: std
+        galore_rank: 16
+        galore_scale: 2
+        galore_target:
+            - all
+        galore_update_interval: 200
+        include_effective_tokens_per_second: false
+        kto_chosen_weight: 1
+        kto_rejected_weight: 1
+        ld_alpha: null
+        lora_alpha: 8
+        lora_dropout: 0
+        lora_rank: 4
+        lora_target:
+            - all
+        loraplus_lr_embedding: 1e-06
+        loraplus_lr_ratio: null
+        module_dropout: 0
+        oft_block_size: 32
+        oft_rank: 0
+        oft_target:
+            - all
+        pissa_convert: false
+        pissa_init: false
+        pissa_iter: 16
+        plot_loss: true
+        ppo_buffer_size: 1
+        ppo_epochs: 4
+        ppo_score_norm: false
+        ppo_target: 6
+        ppo_whiten_rewards: false
+        pref_bco_weight: 0
+        pref_beta: 0.1
+        pref_ftx: 0
+        pref_loss: sigmoid
+        pure_bf16: false
+        ref_model: null
+        ref_model_adapters: null
+        ref_model_quantization_bit: null
+        reward_model: null
+        reward_model_adapters: null
+        reward_model_quantization_bit: null
+        reward_model_type: lora
+        simpo_gamma: 0.5
+        stage: sft
+        swanlab_api_key: <SWANLAB_API_KEY>
+        swanlab_lark_secret: null
+        swanlab_lark_webhook_url: null
+        swanlab_logdir: null
+        swanlab_mode: cloud
+        swanlab_project: llamafactory
+        swanlab_run_name: null
+        swanlab_workspace: null
+        use_adam_mini: false
+        use_apollo: false
+        use_badam: false
+        use_dft_loss: false
+        use_dora: false
+        use_eaft_loss: false
+        use_galore: false
+        use_llama_pro: false
+        use_mca: false
+        use_muon: false
+        use_rslora: false
+        use_swanlab: false
+finetuning_task:
+    value: null
+forced_bos_token_id:
+    value: null
+forced_eos_token_id:
+    value: null
+fp8:
+    value: false
+fp8_backend:
+    value: auto
+fp8_enable_fsdp_float8_all_gather:
+    value: false
+fp16:
+    value: false
+fp16_backend:
+    value: auto
+fp16_full_eval:
+    value: false
+fp16_opt_level:
+    value: O1
+fsdp:
+    value: []
+fsdp_config:
+    value:
+        min_num_params: 0
+        xla: false
+        xla_fsdp_grad_ckpt: false
+        xla_fsdp_v2: false
+fsdp_min_num_params:
+    value: 0
+fsdp_transformer_layer_cls_to_wrap:
+    value: null
+full_determinism:
+    value: false
+generating_args:
+    value:
+        do_sample: true
+        length_penalty: 1
+        max_new_tokens: 1024
+        num_beams: 1
+        repetition_penalty: 1
+        skip_special_tokens: true
+        temperature: 0.95
+        top_k: 50
+        top_p: 0.7
+generation_config:
+    value: null
+generation_max_length:
+    value: 2048
+generation_num_beams:
+    value: null
+gradient_accumulation_steps:
+    value: 8
+gradient_checkpointing:
+    value: false
+gradient_checkpointing_kwargs:
+    value: null
+greater_is_better:
+    value: null
+group_by_length:
+    value: false
+half_precision_backend:
+    value: auto
+hub_always_push:
+    value: false
+hub_model_id:
+    value: null
+hub_private_repo:
+    value: null
+hub_revision:
+    value: null
+hub_strategy:
+    value: every_save
+hub_token:
+    value: <HUB_TOKEN>
+id2label:
+    value:
+        "0": LABEL_0
+        "1": LABEL_1
+ignore_data_skip:
+    value: false
+image_token_id:
+    value: 151655
+include_for_metrics:
+    value: []
+include_inputs_for_metrics:
+    value: false
+include_num_input_tokens_seen:
+    value: "no"
+include_tokens_per_second:
+    value: false
+initializer_range:
+    value: 0.02
+is_decoder:
+    value: false
+is_encoder_decoder:
+    value: false
+jit_mode_eval:
+    value: false
+label_names:
+    value:
+        - labels
+label_smoothing_factor:
+    value: 0
+label2id:
+    value:
+        LABEL_0: 0
+        LABEL_1: 1
+learning_rate:
+    value: 0.0001
+length_column_name:
+    value: length
+length_penalty:
+    value: 1
+liger_kernel_config:
+    value: null
+load_best_model_at_end:
+    value: false
+local_rank:
+    value: 0
+log_level:
+    value: passive
+log_level_replica:
+    value: warning
+log_on_each_node:
+    value: true
+logging_dir:
+    value: saves/qwen3-30b/lora/sft/runs/Feb10_05-38-51_6e7788c8a93b
+logging_first_step:
+    value: false
+logging_nan_inf_filter:
+    value: true
+logging_steps:
+    value: 10
+logging_strategy:
+    value: steps
+lr_scheduler_type:
+    value: cosine
+max_grad_norm:
+    value: 1
+max_length:
+    value: 20
+max_steps:
+    value: -1
+metric_for_best_model:
+    value: null
+min_length:
+    value: 0
+model/num_parameters:
+    value: 8615655024
+model_args:
+    value:
+        adapter_folder: null
+        adapter_name_or_path: null
+        add_special_tokens: null
+        add_tokens: null
+        audio_sampling_rate: 16000
+        block_diag_attn: false
+        cache_dir: null
+        chunk_size: 8192
+        compute_dtype: torch.bfloat16
+        cpu_infer: 32
+        crop_to_patches: false
+        device_map:
+            "": cuda:0
+        disable_gradient_checkpointing: false
+        double_quantization: true
+        enable_liger_kernel: false
+        export_device: cpu
+        export_dir: null
+        export_hub_model_id: null
+        export_legacy_format: false
+        export_quantization_bit: null
+        export_quantization_dataset: null
+        export_quantization_maxlen: 1024
+        export_quantization_nsamples: 128
+        export_size: 5
+        flash_attn: AUTO
+        hf_hub_token: <HF_HUB_TOKEN>
+        image_do_pan_and_scan: false
+        image_max_pixels: 589824
+        image_min_pixels: 1024
+        infer_backend: HF
+        infer_dtype: auto
+        init_special_tokens: noise_init
+        kt_force_think: false
+        kt_maxlen: 4096
+        kt_mode: normal
+        kt_optimize_rule: null
+        kt_use_cuda_graph: true
+        low_cpu_mem_usage: true
+        mixture_of_depths: null
+        mode: normal
+        model_max_length: 2048
+        model_name_or_path: /home/wanghh/Qwen3-Omni-30B-A3B-Thinking
+        model_revision: main
+        moe_aux_loss_coef: null
+        ms_hub_token: <MS_HUB_TOKEN>
+        new_special_tokens_config: null
+        offload_folder: offload
+        om_hub_token: <OM_HUB_TOKEN>
+        print_param_status: false
+        quantization_bit: 4
+        quantization_device_map: null
+        quantization_method: bnb
+        quantization_type: nf4
+        resize_vocab: false
+        rope_scaling: null
+        sglang_config: null
+        sglang_lora_backend: triton
+        sglang_maxlen: 4096
+        sglang_mem_fraction: 0.7
+        sglang_tp_size: -1
+        shift_attn: false
+        split_special_tokens: false
+        train_from_scratch: false
+        trust_remote_code: true
+        upcast_layernorm: false
+        upcast_lmhead_output: false
+        use_audio_in_video: false
+        use_fast_tokenizer: true
+        use_kt: false
+        use_kv_cache: true
+        use_reentrant_gc: true
+        use_unsloth: false
+        use_unsloth_gc: false
+        use_v1_kernels: false
+        video_fps: 2
+        video_max_pixels: 65536
+        video_maxlen: 128
+        video_min_pixels: 256
+        vllm_config: null
+        vllm_enforce_eager: false
+        vllm_gpu_util: 0.7
+        vllm_max_lora_rank: 32
+        vllm_maxlen: 4096
+model_type:
+    value: qwen3_omni_moe_thinker
+mp_parameters:
+    value: ""
+neftune_noise_alpha:
+    value: null
+no_cuda:
+    value: false
+no_repeat_ngram_size:
+    value: 0
+num_beam_groups:
+    value: 1
+num_beams:
+    value: 1
+num_return_sequences:
+    value: 1
+num_train_epochs:
+    value: 3
+optim:
+    value: adamw_torch_fused
+optim_args:
+    value: null
+optim_target_modules:
+    value: null
+output_attentions:
+    value: false
+output_dir:
+    value: saves/qwen3-30b/lora/sft
+output_hidden_states:
+    value: false
+output_scores:
+    value: false
+overwrite_output_dir:
+    value: true
+pad_token_id:
+    value: 151643
+parallelism_config:
+    value: null
+past_index:
+    value: -1
+peft_config:
+    value:
+        default:
+            auto_mapping: null
+            base_model_name_or_path: ""
+            bias: none
+            corda_config: null
+            eva_config: null
+            exclude_modules: null
+            fan_in_fan_out: false
+            inference_mode: false
+            init_lora_weights: true
+            layer_replication: null
+            layers_pattern: null
+            layers_to_transform: null
+            lora_alpha: 8
+            lora_bias: false
+            lora_dropout: 0
+            megatron_config: null
+            megatron_core: megatron.core
+            modules_to_save: null
+            peft_type: LORA
+            qalora_group_size: 16
+            r: 4
+            revision: null
+            runtime_config:
+                ephemeral_gpu_offload: false
+            target_modules:
+                - 36.self_attn.v_proj
+                - gate_proj
+                - model.layers.23.self_attn.k_proj
+                - model.layers.8.self_attn.v_proj
+                - model.layers.11.self_attn.q_proj
+                - down_proj
+                - model.layers.10.self_attn.v_proj
+                - model.layers.11.self_attn.k_proj
+                - model.layers.19.self_attn.q_proj
+                - model.layers.10.self_attn.q_proj
+                - 37.self_attn.v_proj
+                - 40.self_attn.q_proj
+                - 32.self_attn.q_proj
+                - model.layers.13.self_attn.q_proj
+                - model.layers.21.self_attn.v_proj
+                - 47.self_attn.v_proj
+                - 38.self_attn.k_proj
+                - 39.self_attn.v_proj
+                - 42.self_attn.q_proj
+                - model.layers.25.self_attn.q_proj
+                - model.layers.30.self_attn.v_proj
+                - model.layers.18.self_attn.v_proj
+                - model.layers.21.self_attn.k_proj
+                - 32.self_attn.v_proj
+                - model.layers.17.self_attn.k_proj
+                - 40.self_attn.k_proj
+                - model.layers.29.self_attn.q_proj
+                - model.layers.15.self_attn.v_proj
+                - model.layers.14.self_attn.v_proj
+                - model.layers.1.self_attn.v_proj
+                - model.layers.16.self_attn.k_proj
+                - model.layers.26.self_attn.k_proj
+                - model.layers.4.self_attn.q_proj
+                - model.layers.16.self_attn.q_proj
+                - model.layers.3.self_attn.q_proj
+                - model.layers.20.self_attn.q_proj
+                - model.layers.7.self_attn.q_proj
+                - model.layers.31.self_attn.q_proj
+                - model.layers.22.self_attn.q_proj
+                - 34.self_attn.k_proj
+                - 45.self_attn.q_proj
+                - model.layers.24.self_attn.v_proj
+                - 35.self_attn.v_proj
+                - model.layers.3.self_attn.k_proj
+                - model.layers.4.self_attn.k_proj
+                - model.layers.17.self_attn.v_proj
+                - model.layers.14.self_attn.k_proj
+                - model.layers.2.self_attn.q_proj
+                - 35.self_attn.k_proj
+                - gate
+                - model.layers.20.self_attn.v_proj
+                - model.layers.27.self_attn.q_proj
+                - model.layers.29.self_attn.v_proj
+                - model.layers.6.self_attn.q_proj
+                - model.layers.1.self_attn.k_proj
+                - 44.self_attn.k_proj
+                - 46.self_attn.k_proj
+                - 33.self_attn.v_proj
+                - 47.self_attn.q_proj
+                - 46.self_attn.q_proj
+                - model.layers.27.self_attn.k_proj
+                - 36.self_attn.q_proj
+                - model.layers.9.self_attn.v_proj
+                - model.layers.11.self_attn.v_proj
+                - model.layers.30.self_attn.q_proj
+                - model.layers.18.self_attn.k_proj
+                - model.layers.7.self_attn.v_proj
+                - up_proj
+                - 42.self_attn.k_proj
+                - 32.self_attn.k_proj
+                - model.layers.20.self_attn.k_proj
+                - model.layers.8.self_attn.q_proj
+                - model.layers.15.self_attn.k_proj
+                - 43.self_attn.k_proj
+                - model.layers.14.self_attn.q_proj
+                - model.layers.18.self_attn.q_proj
+                - 41.self_attn.k_proj
+                - model.layers.23.self_attn.v_proj
+                - model.layers.15.self_attn.q_proj
+                - 43.self_attn.q_proj
+                - 38.self_attn.q_proj
+                - o_proj
+                - 33.self_attn.q_proj
+                - 37.self_attn.q_proj
+                - model.layers.25.self_attn.v_proj
+                - 42.self_attn.v_proj
+                - 35.self_attn.q_proj
+                - model.layers.12.self_attn.v_proj
+                - model.layers.9.self_attn.q_proj
+                - model.layers.31.self_attn.k_proj
+                - 40.self_attn.v_proj
+                - model.layers.25.self_attn.k_proj
+                - model.layers.31.self_attn.v_proj
+                - model.layers.22.self_attn.k_proj
+                - model.layers.13.self_attn.k_proj
+                - model.layers.5.self_attn.k_proj
+                - 39.self_attn.q_proj
+                - model.layers.26.self_attn.v_proj
+                - 45.self_attn.v_proj
+                - model.layers.8.self_attn.k_proj
+                - model.layers.19.self_attn.v_proj
+                - model.layers.17.self_attn.q_proj
+                - model.layers.16.self_attn.v_proj
+                - model.layers.0.self_attn.v_proj
+                - 44.self_attn.v_proj
+                - model.layers.19.self_attn.k_proj
+                - model.layers.7.self_attn.k_proj
+                - model.layers.21.self_attn.q_proj
+                - model.layers.5.self_attn.q_proj
+                - 47.self_attn.k_proj
+                - 45.self_attn.k_proj
+                - model.layers.23.self_attn.q_proj
+                - model.layers.4.self_attn.v_proj
+                - 41.self_attn.q_proj
+                - model.layers.9.self_attn.k_proj
+                - model.layers.2.self_attn.k_proj
+                - model.layers.28.self_attn.k_proj
+                - 34.self_attn.v_proj
+                - model.layers.27.self_attn.v_proj
+                - model.layers.3.self_attn.v_proj
+                - model.layers.5.self_attn.v_proj
+                - model.layers.22.self_attn.v_proj
+                - 41.self_attn.v_proj
+                - 33.self_attn.k_proj
+                - 38.self_attn.v_proj
+                - model.layers.29.self_attn.k_proj
+                - 34.self_attn.q_proj
+                - 43.self_attn.v_proj
+                - model.layers.0.self_attn.q_proj
+                - model.layers.26.self_attn.q_proj
+                - 46.self_attn.v_proj
+                - model.layers.2.self_attn.v_proj
+                - model.layers.28.self_attn.q_proj
+                - model.layers.28.self_attn.v_proj
+                - 37.self_attn.k_proj
+                - model.layers.30.self_attn.k_proj
+                - 44.self_attn.q_proj
+                - model.layers.10.self_attn.k_proj
+                - model.layers.12.self_attn.k_proj
+                - 36.self_attn.k_proj
+                - model.layers.13.self_attn.v_proj
+                - model.layers.0.self_attn.k_proj
+                - 39.self_attn.k_proj
+                - model.layers.6.self_attn.v_proj
+                - model.layers.6.self_attn.k_proj
+                - model.layers.1.self_attn.q_proj
+                - model.layers.12.self_attn.q_proj
+                - model.layers.24.self_attn.q_proj
+                - model.layers.24.self_attn.k_proj
+            target_parameters: null
+            task_type: CAUSAL_LM
+            trainable_token_indices: null
+            use_dora: false
+            use_qalora: false
+            use_rslora: false
+per_device_eval_batch_size:
+    value: 8
+per_device_train_batch_size:
+    value: 1
+per_gpu_eval_batch_size:
+    value: null
+per_gpu_train_batch_size:
+    value: null
+placement_strategy:
+    value: PACK
+position_id_per_seconds:
+    value: 13
+predict_with_generate:
+    value: false
+prediction_loss_only:
+    value: false
+prefix:
+    value: null
+problem_type:
+    value: null
+project:
+    value: huggingface
+push_to_hub:
+    value: false
+push_to_hub_model_id:
+    value: null
+push_to_hub_organization:
+    value: null
+push_to_hub_token:
+    value: <PUSH_TO_HUB_TOKEN>
+ray_init_kwargs:
+    value: null
+ray_num_workers:
+    value: 1
+ray_run_name:
+    value: null
+ray_scope:
+    value: last
+ray_storage_filesystem:
+    value: null
+ray_storage_path:
+    value: ./saves
+remove_invalid_values:
+    value: false
+remove_unused_columns:
+    value: false
+repetition_penalty:
+    value: 1
+report_to:
+    value:
+        - wandb
+resources_per_worker:
+    value:
+        GPU: 1
+restore_callback_states_from_checkpoint:
+    value: false
+resume_from_checkpoint:
+    value: null
+return_dict:
+    value: true
+return_dict_in_generate:
+    value: false
+run_name:
+    value: null
+save_on_each_node:
+    value: false
+save_only_model:
+    value: false
+save_safetensors:
+    value: true
+save_steps:
+    value: 500
+save_strategy:
+    value: steps
+save_total_limit:
+    value: null
+seconds_per_chunk:
+    value: 2
+seed:
+    value: 42
+sep_token_id:
+    value: null
+skip_memory_metrics:
+    value: true
+sortish_sampler:
+    value: false
+suppress_tokens:
+    value: null
+task_specific_params:
+    value: null
+temperature:
+    value: 1
+text_config:
+    value:
+        _name_or_path: ""
+        _pre_quantization_dtype: torch.bfloat16
+        add_cross_attention: false
+        architectures: null
+        attention_bias: false
+        attention_dropout: 0
+        bad_words_ids: null
+        begin_suppress_tokens: null
+        bos_token_id: null
+        chunk_size_feed_forward: 0
+        cross_attention_hidden_size: null
+        decoder_sparse_step: 1
+        decoder_start_token_id: null
+        diversity_penalty: 0
+        do_sample: false
+        dtype: null
+        early_stopping: false
+        encoder_no_repeat_ngram_size: 0
+        eos_token_id: null
+        exponential_decay_length_penalty: null
+        finetuning_task: null
+        forced_bos_token_id: null
+        forced_eos_token_id: null
+        head_dim: 128
+        hidden_act: silu
+        hidden_size: 2048
+        id2label:
+            "0": LABEL_0
+            "1": LABEL_1
+        initializer_range: 0.02
+        intermediate_size: 768
+        is_decoder: false
+        is_encoder_decoder: false
+        label2id:
+            LABEL_0: 0
+            LABEL_1: 1
+        length_penalty: 1
+        max_length: 20
+        max_position_embeddings: 65536
+        min_length: 0
+        mlp_only_layers: []
+        model_type: qwen3_omni_moe_text
+        moe_intermediate_size: 768
+        no_repeat_ngram_size: 0
+        norm_topk_prob: true
+        num_attention_heads: 32
+        num_beam_groups: 1
+        num_beams: 1
+        num_experts: 128
+        num_experts_per_tok: 8
+        num_hidden_layers: 48
+        num_key_value_heads: 4
+        num_return_sequences: 1
+        output_attentions: false
+        output_hidden_states: false
+        output_router_logits: false
+        output_scores: false
+        pad_token_id: null
+        prefix: null
+        problem_type: null
+        remove_invalid_values: false
+        repetition_penalty: 1
+        return_dict: true
+        return_dict_in_generate: false
+        rms_norm_eps: 1e-06
+        rope_scaling:
+            interleaved: true
+            mrope_interleaved: true
+            mrope_section:
+                - 24
+                - 20
+                - 20
+            rope_type: default
+            type: default
+        rope_theta: 1000000
+        router_aux_loss_coef: 0.001
+        sep_token_id: null
+        shared_expert_intermediate_size: 0
+        sliding_window: null
+        suppress_tokens: null
+        task_specific_params: null
+        temperature: 1
+        tf_legacy_loss: false
+        tie_encoder_decoder: false
+        tie_word_embeddings: false
+        tokenizer_class: null
+        top_k: 50
+        top_p: 1
+        torchscript: false
+        typical_p: 1
+        use_bfloat16: false
+        use_cache: true
+        use_qk_norm: true
+        use_sliding_window: false
+        vocab_size: 152064
+tf_legacy_loss:
+    value: false
+tf32:
+    value: null
+tie_encoder_decoder:
+    value: false
+tie_word_embeddings:
+    value: true
+tokenizer_class:
+    value: null
+top_k:
+    value: 50
+top_p:
+    value: 1
+torch_compile:
+    value: false
+torch_compile_backend:
+    value: null
+torch_compile_mode:
+    value: null
+torch_empty_cache_steps:
+    value: null
+torchdynamo:
+    value: null
+torchscript:
+    value: false
+tpu_metrics_debug:
+    value: false
+tpu_num_cores:
+    value: null
+trackio_space_id:
+    value: trackio
+transformers_version:
+    value: 4.57.1
+typical_p:
+    value: 1
+use_bfloat16:
+    value: false
+use_cache:
+    value: false
+use_cpu:
+    value: false
+use_legacy_prediction_loop:
+    value: false
+use_liger_kernel:
+    value: false
+use_mps_device:
+    value: false
+user_token_id:
+    value: 872
+video_token_id:
+    value: 151656
+vision_config:
+    value:
+        _name_or_path: ""
+        _pre_quantization_dtype: torch.bfloat16
+        add_cross_attention: false
+        apply_vit_abs_pos_embed: true
+        architectures: null
+        bad_words_ids: null
+        begin_suppress_tokens: null
+        bos_token_id: null
+        chunk_size_feed_forward: 0
+        cross_attention_hidden_size: null
+        decoder_start_token_id: null
+        deepstack_visual_indexes:
+            - 8
+            - 16
+            - 24
+        depth: 27
+        diversity_penalty: 0
+        do_sample: false
+        dtype: null
+        early_stopping: false
+        encoder_no_repeat_ngram_size: 0
+        eos_token_id: null
+        exponential_decay_length_penalty: null
+        finetuning_task: null
+        forced_bos_token_id: null
+        forced_eos_token_id: null
+        hidden_act: gelu_pytorch_tanh
+        hidden_size: 1152
+        id2label:
+            "0": LABEL_0
+            "1": LABEL_1
+        image_size: 768
+        in_channels: 3
+        in_chans: 3
+        initializer_range: 0.02
+        intermediate_size: 4304
+        is_decoder: false
+        is_encoder_decoder: false
+        label2id:
+            LABEL_0: 0
+            LABEL_1: 1
+        length_penalty: 1
+        max_length: 20
+        min_length: 0
+        model_type: qwen3_omni_moe_vision_encoder
+        no_repeat_ngram_size: 0
+        num_beam_groups: 1
+        num_beams: 1
+        num_heads: 16
+        num_position_embeddings: 2304
+        num_return_sequences: 1
+        out_hidden_size: 2048
+        output_attentions: false
+        output_hidden_states: false
+        output_scores: false
+        pad_token_id: null
+        patch_size: 16
+        prefix: null
+        problem_type: null
+        remove_invalid_values: false
+        repetition_penalty: 1
+        return_dict: true
+        return_dict_in_generate: false
+        sep_token_id: null
+        spatial_merge_size: 2
+        spatial_patch_size: 16
+        suppress_tokens: null
+        task_specific_params: null
+        temperature: 1
+        temporal_patch_size: 2
+        tf_legacy_loss: false
+        tie_encoder_decoder: false
+        tie_word_embeddings: true
+        tokenizer_class: null
+        tokens_per_second: 2
+        top_k: 50
+        top_p: 1
+        torchscript: false
+        typical_p: 1
+        use_bfloat16: false
+vision_end_token_id:
+    value: 151653
+vision_start_token_id:
+    value: 151652
+warmup_ratio:
+    value: 0.1
+warmup_steps:
+    value: 0
+weight_decay:
+    value: 0

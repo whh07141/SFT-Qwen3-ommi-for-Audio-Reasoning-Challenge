@@ -1,0 +1,57 @@
+{
+  "os": "Linux-3.10.0-1160.76.1.el7.x86_64-x86_64-with-glibc2.35",
+  "python": "CPython 3.11.11",
+  "startedAt": "2026-02-10T07:36:02.355642Z",
+  "args": [
+    "examples/train_qlora/qwen3_lora_sft_otfq.yaml"
+  ],
+  "program": "/home/wanghh/LlamaFactory/src/llamafactory/launcher.py",
+  "codePath": "src/llamafactory/launcher.py",
+  "codePathLocal": "src/llamafactory/launcher.py",
+  "git": {
+    "remote": "https://githubfast.com/hiyouga/LlamaFactory.git",
+    "commit": "e70651ac58af6c3446741e8f6b6d4d0d913248c5"
+  },
+  "email": "1307366566@qq.com",
+  "root": "/home/wanghh/LlamaFactory",
+  "host": "6e7788c8a93b",
+  "executable": "/opt/conda/envs/qwen3-ommi-sft/bin/python3.11",
+  "cpu_count": 40,
+  "cpu_count_logical": 80,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "gpu_count": 3,
+  "disk": {
+    "/": {
+      "total": "55945948299264",
+      "used": "54978138218496"
+    }
+  },
+  "memory": {
+    "total": "269907050496"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 3090",
+      "memoryTotal": "25769803776",
+      "cudaCores": 10496,
+      "architecture": "Ampere",
+      "uuid": "GPU-0a5fdfe1-5039-c83c-f6b2-82ea53613f77"
+    },
+    {
+      "name": "NVIDIA GeForce RTX 3090",
+      "memoryTotal": "25769803776",
+      "cudaCores": 10496,
+      "architecture": "Ampere",
+      "uuid": "GPU-fb7ca5b8-3920-9ecf-6766-5dbf27eefd96"
+    },
+    {
+      "name": "NVIDIA GeForce RTX 3090",
+      "memoryTotal": "25769803776",
+      "cudaCores": 10496,
+      "architecture": "Ampere",
+      "uuid": "GPU-aa1f41a0-4f05-4d23-de59-47f1b83c9420"
+    }
+  ],
+  "cudaVersion": "12.4",
+  "writerId": "5ttu2htppkhskbhmru9cj7zjtp3rkea9"
+}
