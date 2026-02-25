@@ -1,40 +1,28 @@
 # SFT-Qwen3-ommi-for-Audio-Reasoning-Challenge
 
+# Audio-Reasoner Fine-tuning Qwen3-ommi-thinking-30B on Audio-Reasoner (Llamaractory)
 
-# Audio-Reasoner 微调 Qwen3-ommi-thinking-30B（基于 Llamaractory） / Fine-tuning Qwen3-ommi-thinking-30B on Audio-Reasoner (Llamaractory)
-
-**项目概述 / Overview**：
-本项目是用于Interspeech 2026音频推理挑战（[Audio Reasoning Challenge](https://audio-reasoning-challenge.github.io/)）的微调与评估仓库。我们基于[LlamaFactory 仓库](https://github.com/hiyouga/LlamaFactory/tree/main)，使用Audio-Reasoner-CoTA数据集构建了包含完整思维链的多任务SFT数据，微调了Qwen3-Omni-30B-A3B-Thinking。项目包含完整的思维链数据构建、训练过程、推理、评估及复现步骤，旨在为初学者提供一套完整的大模型微调方案。 / This repo documents the end-to-end process for fine-tuning **Qwen3-ommi-thinking-30B** with **Chain-of-Thought (CoT)** supervision on the **Audio-Reasoner** dataset using **Llamaractory**, including data processing, training, inference, evaluation, and reproducibility.
-
----
-
-## 目录 / Table of Contents
-1. 项目简介 / Project Summary
-2. 数据与预处理 / Data & Preprocessing
-3. 微调配置与训练示例 / Fine-tuning Config & Example Commands
-4. 推理与演示 / Inference & Demo
-5. 评估 / Evaluation
-6. 模型卡与使用声明 / Model Card & Usage Notes
-7. 复现说明 / Reproducibility
-8. 常见问题 / FAQ
-9. 引用 / Citations
+**Overview**:
+This repo documents the end-to-end process for fine-tuning **Qwen3-ommi-thinking-30B** with **Chain-of-Thought (CoT)** supervision on the **Audio-Reasoner** dataset using **Llamaractory**, including data processing, training, inference, evaluation, and reproducibility.
 
 ---
 
-## 1. 项目简介 / Project Summary
+## Table of Contents
+1. Project Summary
+2. Data & Preprocessing
+3. Fine-tuning Config & Example Commands
+4. Inference & Demo
+5. Evaluation
+6. Model Card & Usage Notes
+7. Reproducibility
+8. FAQ
+9. Citations
 
+---
 
+## 1. Project Summary
 
-## 2. 数据与预处理 / Data & Preprocessing
-**中文**：
-- 数据集：[Audio-Reasoner-CoTA](https://huggingface.co/datasets/zhifeixie/Audio-Reasoner-CoTA)（请在 `DATA_DIR` 中放置并保持原始结构）。
-- 格式：每条样例包含音频标识、转录/特征（如有）、问题、COT 推理过程（训练时的目标）、以及最终答案。
-- 预处理要点：
-  - 音频处理：如果模型输入包含音频特征（如 log-mel, wav2vec 特征），请在预处理阶段生成 `.npy` / `.pt` 特征并保存索引表。
-  - 文本格式化：将 Chain-of-Thought (逐步推理) 与最终答案明确分隔（示例见下）。
-  - 数据切分：训练/验证/测试（例如 80/10/10）。
-
-**English**:
+## 2. Data & Preprocessing
 - Dataset: [Audio-Reasoner-CoTA](https://huggingface.co/datasets/zhifeixie/Audio-Reasoner-CoTA) (place raw data under `DATA_DIR`).
 - Format: each item includes audio id, transcript/features (if any), question, CoT reasoning (target during SFT), and final answer.
 - Preprocessing highlights:
@@ -47,34 +35,30 @@ Example text training instance (JSON-like):
 {
   "id": "xxx",
   "audio_feat": "path/to/feat.npy",
-  "question": "给出这段音频中说话人的情绪及理由。",
-  "cot": "首先…（逐步推理）…因此结论是…", 
-  "answer": "愤怒"
+  "question": "Give the emotion and reasoning of the speaker in this audio.",
+  "cot": "First... (step-by-step reasoning)... therefore the conclusion is...", 
+  "answer": "anger"
 }
 ```
 
 ---
 
-## 3. 微调配置与训练示例 / Fine-tuning Config & Example Commands 🔧
-**中文说明要点**：
-- 推荐使用混合精度（fp16 或 bf16）、梯度累积和适当的 batch-size/学习率策略。30B 模型通常需要大显存（建议 A100 80GB 或使用 ZeRO/分布式策略 / 8bit 存储）。
-- 如果使用 LoRA 或参数高效微调 (PEFT)，可显著降低显存需求并保持训练速度。
-
-**Suggested dependencies (示例)**:
+## 3. Fine-tuning Config & Example Commands 🔧
+**Suggested dependencies (example)**:
 - Python >= 3.10
 - torch >= 2.x
 - transformers
 - accelerate / deepspeed
-- bitsandbytes (如用 8-bit)
-- llama/llamaractory（你使用的 Llamaractory 版本）
+- bitsandbytes (if using 8-bit)
+- llama/llamaractory (the version you are using)
 
-示例训练配置 (YAML 模板)：
+Example training configuration (YAML template):
 ```yaml
 model:
   base_model: qwen3-ommi-thinking-30b
   dtype: bf16
 training:
-  batch_size: 1               # per device
+  batch_size: 1
   gradient_accumulation_steps: 8
   epochs: 3
   lr: 2e-5
@@ -84,7 +68,7 @@ training:
 optimizer:
   name: adamw
   betas: [0.9, 0.95]
-lora:                       # 如果使用 LoRA
+lora:
   r: 16
   alpha: 32
   dropout: 0.05
@@ -95,88 +79,86 @@ data:
 logging:
   logging_steps: 50
   save_steps: 2000
-
 ```
 
-示例训练命令（根据实际训练脚本调整）:
+Example training commands (adjust to your script):
 ```bash
-# 单节点多卡（示例）
+# single-node multi-GPU (example)
 python train.py --config configs/finetune_cot.yaml --data_dir /path/to/data --output_dir ./checkpoints/finetuned_cot
 
-# 使用 accelerate
+# using accelerate
 accelerate launch --config_file accelerate_config.yaml train.py --config configs/finetune_cot.yaml
 ```
 
-训练要点：
-- 使用 seed 固定化以便复现 (e.g., seed=42)
-- 定期保存验证检查点并监控验证集上的最终答案准确度和 COT 质量
+Training notes:
+- Use mixed precision (fp16 or bf16), gradient accumulation, appropriate batch size/learning rate.
+- For 30B model, large memory needed (recommend A100 80GB or ZeRO/distributed, 8bit).
+- If using LoRA or PEFT, memory can be reduced while keeping training speed.
+- Fix seed for reproducibility (e.g., seed=42)
+- Save validation checkpoints periodically and monitor final answer accuracy and COT quality.
 
 ---
 
-## 4. 推理与演示 / Inference & Demo ▶️
-**格式（Prompt Template）**
-- 为了引导模型生成 Chain-of-Thought（逐步推理），提示中显式要求推理过程：例如 `请逐步推理并给出最终答案（Step-by-step, then final answer）`。
-
-示例 Prompt（中文/英文双语示例）:
+## 4. Inference & Demo ▶️
+Prompt template to elicit chain-of-thought:
 ```
-System: 你是一个擅长音频推理的助手，请在回答时先列出详细推理步骤（Chain-of-Thought），然后给出最终答案。
-User: 问题：<问题文本>
-音频描述：<音频转录或特征简述>
-请开始逐步推理并给出最终答案。
+System: You are an assistant skilled in audio reasoning. Please list detailed reasoning steps (Chain-of-Thought) before giving the final answer.
+User: Question: <question text>
+Audio description: <transcript or feature summary>
+Please reason step-by-step and provide the final answer.
 ```
 
-推荐推理超参数：
-- temperature: 0.0 - 0.7 (0.0 用于确定性答案)
+Recommended inference hyperparameters:
+- temperature: 0.0 - 0.7 (0.0 for deterministic answers)
 - top_p: 0.9
 - max_new_tokens: 256-512
 - stop_sequences: ["\n\n", "Answer:"]
 
-示例推理命令：
+Example inference command:
 ```bash
 python infer.py --model ./checkpoints/finetuned_cot --prompt_file examples/prompt.jsonl --temperature 0.2 --out predictions.jsonl
 ```
 
-Self-consistency（稳健性评估）方法：多次采样生成多条 COT 并对最终答案做多数投票，以提高精度。
+Self-consistency: sample multiple COT outputs and majority-vote final answers for robustness.
 
 ---
 
-## 5. 评估 / Evaluation ✅
-**自动化指标建议**：
-- 最终答案准确率（Accuracy on final answer） — 主指标。
-- Chain-of-Thought 质量：可采用 BLEU / ROUGE / BERTScore 与参考 COT 比较，但最终仍建议人工标注若干例子进行质量评估。
-- Self-consistency 增益测试：比较多次采样后多数投票的准确率提升。
+## 5. Evaluation ✅
+Automatic metrics suggestions:
+- Final answer accuracy (primary metric).
+- COT quality: BLEU/ROUGE/BERTScore vs reference CoT, plus manual annotation.
+- Self-consistency gain: compare majority-vote accuracy from multiple samples.
 
-示例评估脚本（伪命令）：
+Example evaluation script:
 ```bash
 python eval.py --pred predictions.jsonl --gold data/test.jsonl --metrics accuracy,bleu,rouge
 ```
 
-人工评估建议：
-- 随机抽样 200 个样本，让人工评估 COT 的正确性（每条标注：正确/部分正确/错误），并报告比例。
+Manual evaluation:
+- Randomly sample 200 examples for human review of COT correctness.
 
 ---
 
-## 6. 模型卡与使用声明 / Model Card & Usage
-**主要信息**：
-- 模型：基于 Qwen3-ommi-thinking-30B 微调得到的 COT 强化模型。
-- 许可：请在此处补充基模型与训练数据许可信息，确保遵守数据和模型许可。
+## 6. Model Card & Usage
+Key information:
+- Model: Qwen3-ommi-thinking-30B fine-tuned with COT.
+- License: include base model and training data license details.
 
-**限制与风险**：
-- 对音频转录噪声敏感，错误的音频特征或转录会引起错误推理。
-- Chain-of-Thought 生成可能包含不可靠或虚构的中间步骤，请在关键或高风险场景中采用人工核查。
+Limitations & risks:
+- Sensitive to noisy audio transcription/features.
+- COT may contain unreliable or hallucinated steps; human review recommended for critical cases.
 
-**免责声明**：
-- 请勿将本模型用于临床、法律或其他高风险决策场景，除非经过严格的验证和监管合规性审查。
+Disclaimer:
+- Do not use this model for clinical, legal, or other high-risk decision-making without thorough validation and compliance.
 
 ---
 
-## 7. 复现说明 / Reproducibility 🔁
-复现要点：
-1. 固定随机种子（seed）并记录模型/代码 commit hash。
-2. 列出环境依赖（建议提供 `environment.yml` 或 `requirements.txt`）。
-3. 提供训练日志与 checkpoint、配置 YAML 和 tokenizer 信息。
+## 7. Reproducibility 🔁
+Best practices:
+1. Fix random seed and record commit hash.
+2. List environment dependencies (provide `environment.yml` or `requirements.txt`).
 
-示例环境依赖：
+Example environment dependencies:
 ```
 python==3.10
 torch>=2.1
@@ -191,32 +173,10 @@ llamaractory==<your_version>
 
 ---
 
-## 8. 常见问题 / FAQ ❓
-Q: 如何在内存/显存受限情况下训练 30B 模型？
-A: 使用 LoRA/PEFT、8-bit 优化（bitsandbytes）、Deepspeed ZeRO、或分布式多卡训练来降低显存占用。
+## 8. FAQ ❓
+Q: How to train 30B with memory constraints?
+A: Use LoRA/PEFT, 8-bit optimization (bitsandbytes), Deepspeed ZeRO, or distributed multi-GPU.
 
-Q: 如何对 COT 进行自动化评分？
-A: 可结合 BLEU/ROUGE/BERTScore 做近似评估，但 COT 的正确性通常需要人工标注或任务特定规则来判定。
+Q: How to automatically score COT?
+A: Use BLEU/ROUGE/BERTScore approximations, but human annotation or task-specific rules are often necessary.
 
----
-
-## 9. 引用 / Citations 📚
-- Audio-Reasoner 数据集（请列出数据集论文/仓库引用）
-- Qwen3 模型说明（请列出 Qwen 官方引用）
-- Llamaractory（请列出对应的项目引用）
-
----
-
-## 联系与后续工作 / Contact & Next steps
-如果你希望我：
-- 将训练/评估脚本放进 `scripts/` 下并添加 CI 流程，或
-- 将示例推理 notebook (`demo.ipynb`) 添加到仓库，
-请告诉我，我可以继续为你实现这些文件并提交到主分支。🔧
-
----
-
-**License / 许可**：在本仓库中请补充合适的开源许可（如 MIT/Apache-2.0）并注明依赖的模型与数据集许可。
-
----
-
-谢谢！如果你同意，我现在可以把一份 `scripts/` 示例训练脚本、示例 `configs/finetune_cot.yaml`、以及 `examples/` 的推理/评估脚本一并添加到仓库。🎯
