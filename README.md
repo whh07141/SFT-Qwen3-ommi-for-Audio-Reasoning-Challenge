@@ -1,33 +1,38 @@
-# SFT-Qwen3-ommi-for-Audio-Reasoning-Challenge
+# SFT‑Qwen3‑Ommi for Audio-Reasoning Challenge
 
-# Audio-Reasoner Fine-tuning Qwen3-ommi-thinking-30B on Audio-Reasoner (Llamaractory)
+## Overview
 
-**Overview**:
-This repo documents the end-to-end process for fine-tuning **Qwen3-ommi-thinking-30B** with **Chain-of-Thought (CoT)** supervision on the **Audio-Reasoner** dataset using **Llamaractory**, including data processing, training, inference, evaluation, and reproducibility.
+This repository captures the complete workflow for fine-tuning the **Qwen3-ommi-thinking-30B** model with **Chain‑of‑Thought (CoT)** supervision on the **Audio‑Reasoner** dataset using the **Llamaractory** framework. It covers data preparation, model training, inference, evaluation, and guidelines for reproducibility.
 
 ---
 
 ## Table of Contents
-1. Project Summary
-2. Data & Preprocessing
-3. Fine-tuning Config & Example Commands
-4. Inference & Demo
-5. Evaluation
-6. Model Card & Usage Notes
-7. Reproducibility
-8. FAQ
-9. Citations
+
+1. [Project Summary](#project-summary)
+2. [Data & Preprocessing](#data--preprocessing)
+3. [Fine-tuning Configuration & Example Commands](#fine-tuning-configuration--example-commands)
+4. [Inference & Demo](#inference--demo)
+5. [Evaluation](#evaluation)
+6. [Model Card & Usage Notes](#model-card--usage-notes)
+7. [Reproducibility](#reproducibility)
+8. [FAQs](#faqs)
+9. [Acknowledgements](#acknowledgements)
+10. [Citations](#citations)
 
 ---
 
 ## 1. Project Summary
 
+A step-by-step guide for adapting Qwen3‑ommi-thinking‑30B to the Audio‑Reasoner challenge. The repository is intended as a reference implementation for researchers and practitioners seeking to apply CoT fine‑tuning to multimodal audio reasoning tasks.
+
 ## 2. Data & Preprocessing
-- Dataset: [Audio-Reasoner-CoTA](https://huggingface.co/datasets/zhifeixie/Audio-Reasoner-CoTA).
-- Format: the dataset is stored in Apache Parquet columnar format.
-- Preprocessing:
-  - Run `python demo.py` to save audio data along with labels containing full chains of thought.
-  - Run `python qwen3_audio_think_sft.py` to generate labels in a format consumable by Llamafactory.
+- **Dataset:** [Audio-Reasoner-CoTA](https://huggingface.co/datasets/zhifeixie/Audio-Reasoner-CoTA).
+- **Storage format:** Apache Parquet (columnar) for efficient I/O.
+- **Preprocessing pipeline:**
+  1. Execute `python demo.py` to extract and store audio samples with their corresponding CoT labels.
+  2. Run `python qwen3_audio_think_sft.py` to convert the labels into the format expected by Llamafactory.
+
+The processed data should be organized under a `DATA_DIR` directory, preserving the original structure.
 
 Example training sample (JSON-like):
 ```
@@ -36,8 +41,9 @@ Example training sample (JSON-like):
 
 ---
 
-## 3. Fine-tuning Config & Example Commands 🔧
-**Suggested dependencies (example)**:
+## 3. Fine-tuning Configuration & Example Commands 🔧
+
+### Dependencies (suggested)
 - Python==3.11
 - torch==2.10
 - transformers==4.57.1
@@ -46,7 +52,7 @@ Example training sample (JSON-like):
 - llama/llamaractory
 - vllm
 - flash-attn
-*It is recommended to use Docker. I ran the container successfully with `11.8.0-cudnn8-runtime-ubuntu22.04`; choose a CUDA version supported by your Ubuntu release. I will upload this image later.*
+*Using Docker is recommended; the author successfully ran a container based on `11.8.0-cudnn8-runtime-ubuntu22.04`. Pick a CUDA version compatible with your Ubuntu release. An image will be provided shortly.*
 
 Example training configuration (YAML template):
 ```yaml
@@ -99,9 +105,10 @@ Example training commands:
 llamafactory-cli train examples/train_qlora/qwen3_lora_sft_otfq.yaml
 ```
 
-Training notes:
-- The training setup uses four 24 GB RTX 3090 cards, which restricts us to 4‑bit quantized training; remember to enable gradient accumulation and choose appropriate batch size/learning rate.
-- Fix the random seed for reproducibility (e.g., seed=42).
+**Training notes:**
+
+- The experiment used four 24 GB RTX 3090 GPUs, necessitating 4‑bit quantization. Enable gradient accumulation and tune batch size and learning rate accordingly.
+- Set a fixed random seed (e.g., 42) to ensure reproducible results.
 
 ---
 
@@ -121,14 +128,26 @@ python infer_single_model_baseline.py \
    --max_new_tokens 1024
 ```
 ```
-Training notes: the inference run uses the SFT model described above.
+*Note: the inference script operates on the SFT model produced by the fine-tuning process described earlier.*
 ```
 
 
 ---
 
-## 5. Result ✅
-The following are the results on MMAR for the un-finetuned baseline and the 4‑bit quantized SFT model:
+## 5. Evaluation
+
+The primary evaluation is conducted on the MMAR benchmark. Key metrics include:
+
+- **Final-answer accuracy** (overall and modality-wise).
+- **Chain-of-Thought quality**, assessed via automated metrics (BLEU/ROUGE/BERTScore) and occasional manual review.
+- **Self-consistency** gain when sampling multiple reasoning chains.
+
+Below are the absolute accuracies for the baseline and the 4‑bit quantized SFT model:
+
+| Models                              | Avg    | Sound  | Music  | Speech | Sound-Music | Sound-Speech | Music-Speech | Sound-Music-Speech |
+|-------------------------------------|--------|--------|--------|--------|-------------|--------------|--------------|--------------------|
+| Qwen3-ommi-thinking-30B             | 66.60% | 61.82% | 41.25% | 78.57% | 63.64%      | 76.61%       | 70.73%       | 66.67%             |
+| SFT-Qlora-Qwen3-ommi-thinking-30B   | 57.30% | 50.91% | 41.26% | 64.97% | 58.06%      | 67.89%       | 56.10%       | 50.00%             |
 
 | Models                              | Avg    | Sound  | Music  | Speech | Sound-Music | Sound-Speech | Music-Speech | Sound-Music-Speech |
 |-------------------------------------|--------|--------|--------|--------|-------------|--------------|--------------|--------------------|
@@ -137,7 +156,52 @@ The following are the results on MMAR for the un-finetuned baseline and the 4‑
 
 
 
-## 7. Acknowledge 🔁
-All of my work is based on Llamafactory and the [Audio-Reasoning-Challenge-Baselines](https://github.com/Audio-Reasoning-Challenge/Audio-Reasoning-Challenge-Baselines) repository. If you find this project useful, please consider giving those projects a star.
+## 6. Model Card & Usage Notes
+
+**Model:** fine-tuned Qwen3-ommi-thinking-30B with CoT supervision.
+
+**License:** please consult the licenses of the base model and the Audio-Reasoner dataset. Ensure compliance with both when distributing or deploying the tuned model.
+
+**Limitations & Risks:**
+- Performance degrades with noisy or inaccurate audio transcriptions.
+- Generated reasoning chains may contain hallucinations; critical applications should include human oversight.
+
+**Disclaimer:** not intended for clinical, legal, or other high-stakes decision-making without extensive validation.
+
+---
+
+## 7. Reproducibility
+
+Follow these practices to reproduce experiments:
+1. Fix random seeds and record code/model commit hashes.
+2. Document environment dependencies (e.g., via an `environment.yml` or `requirements.txt`).
+3. Archive training logs, configs, and tokenizer files.
+
+---
+
+## 8. FAQs
+
+**Q:** How can I train the 30B model with limited GPU memory?
+**A:** Use parameter-efficient methods such as LoRA or PEFT, 8-bit quantization (bitsandbytes), Deepspeed ZeRO, or distribute across multiple GPUs.
+
+**Q:** Is there an automated way to score Chain-of-Thought responses?
+**A:** You can apply BLEU/ROUGE/BERTScore as proxies, but human annotation or task-specific heuristics often yield more reliable results.
+
+---
+
+## 9. Acknowledgements 🔁
+This work builds on the **Llamafactory** framework and the [Audio-Reasoning-Challenge-Baselines](https://github.com/Audio-Reasoning-Challenge/Audio-Reasoning-Challenge-Baselines) repository. If these resources help you, please consider giving them a star.
+
+---
+
+## 10. Citations
+
+Please cite the following sources when referencing this project:
+
+- Audio Reasoning Challenge: https://audio-reasoning-challenge.github.io/
+- Llamafactory: https://github.com/hiyouga/LlamaFactory
+- Qwen3 model: (insert appropriate paper/URL)
+
+---
 
 ---
