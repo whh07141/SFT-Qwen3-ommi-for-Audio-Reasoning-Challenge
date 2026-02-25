@@ -1,5 +1,0 @@
-model_name_or_path: /home/wanghh/Qwen3-Omni-30B-A3B-Thinking
-adapter_name_or_path: /home/wanghh/LlamaFactory/saves/qwen3-30b/lora/sft/checkpoint-126
-template: qwen3_nothink
-infer_backend: huggingface  # choices: [huggingface, vllm, sglang, ktransformers]
-trust_remote_code: true
