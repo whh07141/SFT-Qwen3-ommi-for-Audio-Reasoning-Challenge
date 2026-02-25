@@ -23,7 +23,7 @@ This repository captures the complete workflow for fine-tuning the **Qwen3-ommi-
 
 ## 1. Project Summary
 
-A step-by-step guide for adapting Qwen3‑ommi-thinking‑30B to the Audio‑Reasoner challenge. The repository is intended as a reference implementation for researchers and practitioners seeking to apply CoT fine‑tuning to multimodal audio reasoning tasks.
+A step-by-step guide for adapting Qwen3‑ommi-thinking‑30B to the Audio‑Reasoner challenge. The repository is intended as a reference implementation for researchers  seeking to apply CoT fine‑tuning to  audio reasoning tasks.
 
 ## 2. Data & Preprocessing
 - **Dataset:** [Audio-Reasoner-CoTA](https://huggingface.co/datasets/zhifeixie/Audio-Reasoner-CoTA).
@@ -32,7 +32,6 @@ A step-by-step guide for adapting Qwen3‑ommi-thinking‑30B to the Audio‑Rea
   1. Execute `python demo.py` to extract and store audio samples with their corresponding CoT labels.
   2. Run `python qwen3_audio_think_sft.py` to convert the labels into the format expected by Llamafactory.
 
-The processed data should be organized under a `DATA_DIR` directory, preserving the original structure.
 
 Example training sample (JSON-like):
 ```
@@ -147,12 +146,7 @@ Below are the absolute accuracies for the baseline and the 4‑bit quantized SFT
 | Models                              | Avg    | Sound  | Music  | Speech | Sound-Music | Sound-Speech | Music-Speech | Sound-Music-Speech |
 |-------------------------------------|--------|--------|--------|--------|-------------|--------------|--------------|--------------------|
 | Qwen3-ommi-thinking-30B             | 66.60% | 61.82% | 41.25% | 78.57% | 63.64%      | 76.61%       | 70.73%       | 66.67%             |
-| SFT-Qlora-Qwen3-ommi-thinking-30B   | 57.30% | 50.91% | 41.26% | 64.97% | 58.06%      | 67.89%       | 56.10%       | 50.00%             |
-
-| Models                              | Avg    | Sound  | Music  | Speech | Sound-Music | Sound-Speech | Music-Speech | Sound-Music-Speech |
-|-------------------------------------|--------|--------|--------|--------|-------------|--------------|--------------|--------------------|
-| Qwen3-ommi-thinking-30B             | 66.60% | 61.82% | 41.25% | 78.57% | 63.64%      | 76.61%       | 70.73%       | 66.67%             |
-| SFT-Qlora-Qwen3-ommi-thinking-30B   | 57.30% | 50.91% | 41.26% | 64.97% | 58.06%      | 67.89%       | 56.10%       | 50.00%             |
+| SFT-Qlora-Qwen3-ommi-thinking-30B   | 60.70% | 53.33% | 40.78% | 69.73% | 63.64%      | 72.48%       | 58.54%       | 70.83%             |
 
 
 
@@ -191,17 +185,5 @@ Follow these practices to reproduce experiments:
 
 ## 9. Acknowledgements 🔁
 This work builds on the **Llamafactory** framework and the [Audio-Reasoning-Challenge-Baselines](https://github.com/Audio-Reasoning-Challenge/Audio-Reasoning-Challenge-Baselines) repository. If these resources help you, please consider giving them a star.
-
----
-
-## 10. Citations
-
-Please cite the following sources when referencing this project:
-
-- Audio Reasoning Challenge: https://audio-reasoning-challenge.github.io/
-- Llamafactory: https://github.com/hiyouga/LlamaFactory
-- Qwen3 model: (insert appropriate paper/URL)
-
----
 
 ---
